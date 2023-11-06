@@ -6,6 +6,7 @@ import net.erik.springboot.repository.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class PeopleController {
     }
 
     @PostMapping("/people")
-    public People createPeople(@RequestBody People people) {
+    public People createPeople(@Valid @RequestBody People people) {
         return peopleRepository.save(people);
     }
 
@@ -37,7 +38,7 @@ public class PeopleController {
     }
 
     @PutMapping("/people/{id}")
-    public ResponseEntity<People> updatePeople(@PathVariable Long id, @RequestBody People peopleDetails) {
+    public ResponseEntity<People> updatePeople(@PathVariable Long id, @Valid @RequestBody People peopleDetails) {
         People people = peopleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("People not exist with id :" + id));
 
